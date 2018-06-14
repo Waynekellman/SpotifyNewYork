@@ -31,30 +31,30 @@ public class Main {
             return "";
         }
 
-        StringBuilder sBuilder = new StringBuilder();
-        Queue<Character> tBuilder = new LinkedList<>();
+        StringBuilder sortedString = new StringBuilder();
+        Queue<Character> sortedByString = new LinkedList<>();
 
-        Map<Character, Integer> sMap = new HashMap<>();
+        Map<Character, Integer> stringCharMap = new HashMap<>();
         for (int i = 0; i < s.length(); i++) {
             char sChar = s.charAt(i);
-            if (sMap.containsKey(sChar)) sMap.put(sChar, sMap.get(sChar) + 1);
-            else sMap.put(sChar, 1);
+            if (stringCharMap.containsKey(sChar)) stringCharMap.put(sChar, stringCharMap.get(sChar) + 1);
+            else stringCharMap.put(sChar, 1);
         }
 
-        fillQueue(t, tBuilder);
+        fillQueue(t, sortedByString);
 
-        while (!tBuilder.isEmpty()) {
-            if (sMap.containsKey(tBuilder.peek()) && sMap.get(tBuilder.peek()) > 1) {
-                sBuilder.append(tBuilder.peek());
-                sMap.put(tBuilder.peek(), sMap.get(tBuilder.peek()) - 1);
-            } else if (sMap.containsKey(tBuilder.peek())) {
-                sBuilder.append(tBuilder.poll());
+        while (!sortedByString.isEmpty()) {
+            if (stringCharMap.containsKey(sortedByString.peek()) && stringCharMap.get(sortedByString.peek()) > 1) {
+                sortedString.append(sortedByString.peek());
+                stringCharMap.put(sortedByString.peek(), stringCharMap.get(sortedByString.peek()) - 1);
+            } else if (stringCharMap.containsKey(sortedByString.peek())) {
+                sortedString.append(sortedByString.poll());
             } else {
-                tBuilder.poll();
+                sortedByString.poll();
             }
         }
 
-        return sBuilder.toString();
+        return sortedString.toString();
     }
 
     private static void fillQueue(String t, Queue<Character> tBuilder) {
@@ -130,13 +130,13 @@ public class Main {
         }
         count = 0;
         denominations = denomination;
-        change(0, amount);
+        possibilities(0, amount);
 
         return count;
 
     }
 
-    private static void change(int index, int amount) {
+    private static void possibilities(int index, int amount) {
         if (index >= denominations.length){
             return;
         }
@@ -145,7 +145,7 @@ public class Main {
         }
 
         while (amount > 0) {
-            change(index+1,amount);
+            possibilities(index+1,amount);
             amount -= denominations[index];
         }
 
